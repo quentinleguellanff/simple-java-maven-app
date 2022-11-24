@@ -29,6 +29,13 @@ pipeline{
                 sh 'docker push qleguellanff/java-hello-world'
             }
         }
-        
     }
+	post{
+		failure{
+			emailext body: 'Ce Build $BUILD_NUMBER a échoué',
+			recipientProviders:[requestor()],
+			subject: 'build',
+			to:	'quentinleguellanff@gmail.com'
+		}
+	}
 }
